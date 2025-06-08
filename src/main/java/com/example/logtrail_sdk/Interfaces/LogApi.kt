@@ -11,10 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface LogApi {
-
-    companion object{
-        const val BASE_URL : String = "http://IP_ADDRESS:5000/"
-    }
+    // Base URL is now configured dynamically through LogTrailConfig
 
     @POST("logs/")
     fun sendLog(@Body log: LogItem) : Call<Map<String, String>>

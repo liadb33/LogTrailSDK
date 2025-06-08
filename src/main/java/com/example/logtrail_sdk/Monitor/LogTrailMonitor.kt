@@ -3,6 +3,7 @@ package com.example.logtrail_sdk.Monitor
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.example.logtrail_sdk.Data.LogTrailConfig
 
 /**
  * LogTrailMonitor - System-level monitoring for the LogTrail SDK
@@ -26,8 +27,9 @@ object LogTrailMonitor {
     /**
      * Initialize all monitoring components
      * @param context Application or Activity context
+     * @param config LogTrailConfig containing monitoring settings
      */
-    fun initialize(context: Context) {
+    fun initialize(context: Context, config: LogTrailConfig? = null) {
         if (isInitialized) {
             Log.d(TAG, "LogTrailMonitor already initialized")
             return
@@ -46,7 +48,12 @@ object LogTrailMonitor {
             initializeNetworkMonitoring()
             
             isInitialized = true
-            Log.d(TAG, "✅ LogTrailMonitor initialized successfully")
+            val message = "✅ LogTrailMonitor initialized successfully"
+            if (config?.enableDebugLogs == true) {
+                Log.d(TAG, "$message (debug logging enabled)")
+            } else {
+                Log.d(TAG, message)
+            }
             
         } catch (e: Exception) {
             Log.e(TAG, "Failed to initialize LogTrailMonitor: ${e.message}", e)
